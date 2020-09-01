@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Fragment, Component} from 'react';
 import './App.css';
 import Movies from './components/Movies'
 import axios from 'axios'
@@ -16,25 +16,21 @@ class App extends Component {
   changeHandler = (e) => {
     axios.get(`https://jsonmock.hackerrank.com/api/movies?Year=${e.target.value}`)
     .then(response => {
-      const movieData = response.data.map(i => {
-          return {
-              ...i
-          }
-      })
+      const movieData = response.data.map(i => i)
     this.setState({
       movies: movieData
     })
       
-
   })
   }
   render (){
   const optionList = years.map(year => <option key={year}>{year}</option>)
+  console.log(years)
     return (
-      <React.Fragment>
+      <Fragment>
         <Movies options ={optionList} changeYear={this.changeHandler}/>
-        <p>{this.state.movies}</p>
-      </React.Fragment>
+        <p>{this.state.movies.Title}</p>
+      </Fragment>
     )
   }
 
